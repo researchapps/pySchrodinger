@@ -168,6 +168,7 @@ class Schrodinger(object):
             d_psi = self.wf_norm(self.psi_x - old_psi)
             old_psi = 1. * self.psi_x
         self.t = t0
+        return self.psi_x
 
     def time_step(self, dt, Nsteps=1):
         """
@@ -186,7 +187,7 @@ class Schrodinger(object):
         self.dt = dt
         if Nsteps > 0:
             self.psi_mod_x *= self.x_evolve_half
-            for num_iter in xrange(Nsteps - 1):
+            for num_iter in range(Nsteps - 1):
                 self.compute_k_from_x()
                 self.psi_mod_k *= self.k_evolve
                 self.compute_x_from_k()
