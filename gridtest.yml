@@ -1,0 +1,31 @@
+schrodinger:
+  filename: /home/vanessa/Desktop/Code/pySchrodinger/schrodinger.py
+
+  grids:
+    schrodinger_inputs:
+      args:
+        m: 1.9
+        N: [512, 2048, 4096]
+        dx: 1.5
+        V0: 1.5
+      functions:
+        V_x: schrodinger_helpers.generate_V_x
+        x: schrodinger_helpers.generate_x
+        psi_x0: schrodinger_helpers.generate_psi_x0
+
+  tests: 
+    schrodinger.Schrodinger:
+      - instance: schrodinger_instance
+        grid: schrodinger_inputs
+        isinstance: Schrodinger
+        save: false
+
+    Schrodinger.solve:
+    - args:
+        self: "{{ instance.schrodinger_instance }}"
+        Nsteps: [1, 2]
+        dt: [0.01, 0.02]
+        eps: 1000
+        max_iter: 1000
+      metrics: ["@length", "@timeit"]
+
